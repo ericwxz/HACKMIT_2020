@@ -1,10 +1,21 @@
 document.addEventListener('DOMContentLoaded', function(){
 
-console.log('hello')
+    console.log('hello')
 
-if (sessionStorage.getItem('userkey') != null && sessionStorage.getItem('username') != null){
-    coverUpLogin("LoggedInAt " + sessionStorage.getItem('userkey') + " " + sessionStorage.getItem('username'))
-}
+    // helper methods 
+    function qs(identifier){
+        return document.querySelector(identifier) 
+    }
+    function ce(element){
+        return document.createElement(element) 
+    }
+
+    if (sessionStorage.getItem('userkey') == null && sessionStorage.getItem('username') == null){
+        LoginPage()
+    } 
+
+    function LoginPage(){
+
 
 
 
