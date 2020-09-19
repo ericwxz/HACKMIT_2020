@@ -10,22 +10,28 @@ document.addEventListener('DOMContentLoaded', function(){
         return document.createElement(element) 
     }
 
-
+    const mainbox = qs('div#mainbox')  
+    function ClearMainBox(){ 
+        mainbox.innerHTML = " "
+    }
 
     if (sessionStorage.getItem('userkey') == null && sessionStorage.getItem('username') == null){
         console.log('not logged in')
-        LoginPage()
+        ClearMainBox() 
+        LoginPage() 
     } 
 
-
     function LoginPage(){  
-        const mainbox = qs('div#mainbox')        
         const loginBox = ce('div') 
         loginBox.id = "loginbox" 
 
         const loginP = ce('p') 
         loginP.innerText = "LOG IN"
         loginBox.append(loginP) 
+
+        const loginMessageSlot = ce('p') 
+        loginMessageSlot.id = "login-message-slot"
+        loginBox.append(loginMessageSlot)
 
         const loginForm = ce('form') 
         loginForm.id = "login-form" 
@@ -35,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function(){
         loginForm.append(inputUsername)
         inputUsername.placeholder = "username"
 
-        const inputLineBreak1 = ce('br')
+        const inputLineBreak1 = ce('br') 
         loginForm.append(inputLineBreak1)
 
         const inputPassword = ce('input')
@@ -53,9 +59,17 @@ document.addEventListener('DOMContentLoaded', function(){
         loginBox.append(loginForm) 
         loginForm.addEventListener('submit', function(event){
             console.log(event) 
-            event.preventDefault()
+            event.preventDefault() 
             LogIn(event) 
         }) 
+
+        const signInButton = ce('button')
+        signInButton.innerText = "Or Sign In Instead"
+        signInButton.addEventListener('click', function(){
+            ClearMainBox() 
+            SignUpPage()
+        })
+        loginBox.append(signInButton)
 
         mainbox.append(loginBox)
     } 
@@ -74,24 +88,22 @@ document.addEventListener('DOMContentLoaded', function(){
             body: JSON.stringify({
                 username: event.target.querySelector('#login-username').value, 
                 password: event.target.querySelector('#login-password').value
-            })
-        }
+            }) 
+        } 
 
         fetch('http://localhost:3000/users/login', configObj)
             .then(res => res.json())
             .then(json => {
-                if (json.message == "Success"){
-                    sessionStorage.setItem('userkey', json.message.split(" ")[1]) 
-                    sessionStorage.setItem('username', json.message.split(" ")[2])
+                if (json.status == "Success"){
+                    sessionStorage.setItem('userkey', json.username) 
+                    sessionStorage.setItem('hash', json.hash) 
                     console.log(sessionStorage.getItem('userkey')) 
-
-                    coverUpLogin(json.message) 
-                    textPage("1.1") 
                 } 
-                else {
-                    user_message_slot.innerText = json.message
+                else { 
+                    loginMessageSlot = qs('p#login-message-slot')
+                    loginMessageSlot.innerText = "Details Invalid, Please Try Again"
                     setTimeout(function(){
-                        user_message_slot.innerText = ""
+                        loginMessageSlot.innerText = ""
                     }, 2000) 
                 } 
                 event.target.querySelector('#login-username').value = ''
@@ -100,6 +112,61 @@ document.addEventListener('DOMContentLoaded', function(){
 
     }
 
+    function SignUpPage(){
+        const signUpBox = ce('div') 
+        signUpBox.id = "loginbox" 
+        mainbox.append(signUpBox)
+
+        const signInP = ce('p') 
+        signInP.innerText = "SIGN UP"
+        signUpBox.append(signInP) 
+
+        const signUpForm = ce('form') 
+        signUpForm.id = "signup-form" 
+        signUpBox.append(signUpForm)
+        
+        const inputUsername = ce('input') 
+        inputUsername.id = "login-username"
+        signUpForm.append(inputUsername)
+        inputUsername.placeholder = "create a username"
+
+        const inputLineBreak1 = ce('br') 
+        signUpForm.append(inputLineBreak1)
+
+        const inputPassword = ce('input')
+        inputPassword.id = "login-password"
+        signUpForm.append(inputPassword)
+        inputPassword.placeholder = "create a password"
+ 
+        const inputLineBreak2 = ce('br')
+        signUpForm.append(inputLineBreak2)
+
+        const inputPasswordCheck = ce('input')
+        inputPasswordCheck.id = "login-password-check"
+        signUpForm.append(inputPasswordCheck)
+        inputPasswordCheck.placeholder = "type password again"
+   
+        const inputLineBreak3 = ce('br')
+        signUpForm.append(inputLineBreak3)
+
+        const signUpSubmit = ce('button')
+        signUpSubmit.innerText = "Sign Up" 
+        signUpForm.append(signUpSubmit) 
+
+        const backToLogin = ce('button')
+        backToLogin.innerText = "Back To Login"
+        signUpBox.append(backToLogin)
+        backToLogin.addEventListener('click', function(){
+            ClearMainBox() 
+            LoginPage()
+        })
+
+        signUpForm.addEventListener('submit', function(event){
+            event.preventDefault() 
+            console.log(event)
+        })
+
+    }
 
 
 
