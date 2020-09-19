@@ -34,12 +34,12 @@ body {
   margin: auto; 
   width: 0;
   height: 3px;
-  background: #E93F33;
+  background: white;
   transition: width .3s;
 }
 
 #topnav span:hover {
-  color: #E93F33;
+  color: white;
 }
 
 #topnav span:hover:after {
