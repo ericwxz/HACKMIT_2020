@@ -23,7 +23,10 @@ body {
 
 #topnav span { 
   float: left; 
-  padding: 14px 14px;
+  padding-top: 10px;
+  padding-bottom: 10px; 
+  padding-left: 40px; 
+  padding-right: 40px; 
   text-decoration: none;
   font-size: 20px;
 } 
@@ -59,7 +62,6 @@ body {
 
 
 /* LOGGING IN */
-
 #loginbox {
   margin-top: 10%; 
   margin-left: 30%; 
@@ -76,5 +78,32 @@ body {
 #login-p {
   font-size: 20px; 
 }  
+
+
+
+/* DASHBOARD */
+#splitleft {
+  height: 90%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 70px;
+  padding-bottom: 5px; 
+  left: 0;
+  overflow: scroll; 
+  background-color: yellow; 
+}
+
+#splitright {
+  height: 90%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 70px;
+  padding-bottom: 5px; 
+  right: 0;
+  overflow: scroll; 
+  background-color: red; 
+}
 
 

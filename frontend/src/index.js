@@ -4,12 +4,17 @@ document.addEventListener('DOMContentLoaded', function(){
     const mainbox = qs('div#mainbox')  
 
     // DEFINITIONS 
-    const dashboardButton = qs('button')
-    const 
+    const dashboardTab = qs('span#page-dashboard')
+    const requestsTab = qs('span#page-requests')
+    const analyticsTab = qs('span#page-analytics')
+    const storiesTab = qs('span#page-stories')
 
     // EXPERIMENT 
-    // sessionStorage.setItem('userkey', null) 
-    sessionStorage.removeItem('userkey')
+    sessionStorage.setItem('userkey', 123) 
+    sessionStorage.setItem('username', 'alexis') 
+
+    // sessionStorage.removeItem('userkey')
+    // sessionStorage.removeItem('userkey')
 
     // INITIAL CHECK IF LOGGED IN ON PAGE LOAD 
     if (sessionStorage.getItem('userkey') == null && sessionStorage.getItem('username') == null){
@@ -22,7 +27,29 @@ document.addEventListener('DOMContentLoaded', function(){
         Dashboard() 
     }
 
+    dashboardTab.addEventListener('click', function(){
+        if (sessionStorage.getItem('userkey') != null && sessionStorage.getItem('username') != null) {
+            Dashboard() 
+        } else{
+            LoginPage() 
+        }
+    })
 
+    requestsTab.addEventListener('click', function(){
+        if (sessionStorage.getItem('userkey') != null && sessionStorage.getItem('username') != null) {
+            Requests() 
+        } else{
+            LoginPage() 
+        }
+    })
+
+    analyticsTab.addEventListener('click', function(){
+        Analytics() 
+    })
+
+    storiesTab.addEventListener('click', function(){
+        Stories() 
+    }) 
 
 }) 
 
@@ -45,6 +72,7 @@ function ClearMainBox(){
 // LOGGING IN 
 
 function LoginPage(){  
+    ClearMainBox() 
     const loginBox = ce('div') 
     loginBox.id = "loginbox" 
 
@@ -145,6 +173,7 @@ function LogIn(event){
 // SIGNING UP 
 
 function SignUpPage(){
+    ClearMainBox() 
     const signUpBox = ce('div') 
     signUpBox.id = "loginbox" 
     mainbox.append(signUpBox)
@@ -293,10 +322,33 @@ function SignUp(event){
 // DASHBOARD 
 
 function Dashboard(){
+    ClearMainBox() 
     console.log('yo, dashboard')
+
+    splitRight = ce('div')
+    splitRight.id = "splitright"
+    mainbox.append(splitRight)
+
+    splitLeft = ce('div')
+    splitLeft.id = "splitleft"
+    mainbox.append(splitLeft)
 
 }
 
+function Requests(){
+    ClearMainBox() 
+    console.log('yo, requests')
+}
+
+function Analytics(){
+    ClearMainBox() 
+    console.log('yo, analytics')
+}
+
+function Stories(){ 
+    ClearMainBox() 
+    console.log('yo, stories')
+}
 
 
 
