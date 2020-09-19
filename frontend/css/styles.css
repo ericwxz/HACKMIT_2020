@@ -46,7 +46,6 @@ body {
   width: 100%;
 } 
 
-
 #mainbox { 
     height: 90%;
     width: 100%;
@@ -56,5 +55,18 @@ body {
     overflow-x: hidden;
     padding-bottom: 5px; 
   }
+
+#loginbox {
+  margin-top: 10%; 
+  margin-left: 30%; 
+  margin-right: 30%; 
+  padding-top: 3px; 
+  padding-bottom: 10px; 
+  border-radius: 7px; 
+  background-color: #fff5f2; 
+  color: black; 
+  text-align: center; 
+  line-height: 30px; 
+}
 
   
