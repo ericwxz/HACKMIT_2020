@@ -1,5 +1,6 @@
 import data
 import json
+
 import location
 from datetime import datetime
 
@@ -60,6 +61,7 @@ def InitializeRequest(username, title, content, timeframe, new_location_name = N
     return 1
 
 
+
 def DisplayRequestInfo(requestID):
     "retrieves request info in requesttable: username, location, title, content, timeframe, status, claimant"
     userID = All_Requests.loc[requestID]['requester']
@@ -74,7 +76,7 @@ def DisplayRequestInfo(requestID):
 
 
 def ClaimRequest(requestID, username):
-    "self explanatory, update data fields for request"
+    """self explanatory, update data fields for request, return the username of the poster for requestID"""
     userID = hashUsername(username)
     All_Requests.add_fufiller(requestID, userID, All_Users)
 
@@ -90,13 +92,14 @@ def CancelRequest(requestID,username):
 
 
 def DisplayLocationInfo(locationname):
-    "return json with location points"
+    """return location points"""
     node = head.search(locationname)
     if not node:
         print("Unknown location")
         return None
     points = node.points
     return points
+
 
 
 def NearbyRequests(locationname):
@@ -121,7 +124,3 @@ def hashUsername(username):
 def unhashUsername(userID):
     username = All_Users.loc[userID]['username']
     return username
-
-
-
-    
