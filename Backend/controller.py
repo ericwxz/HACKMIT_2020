@@ -74,6 +74,8 @@ def DisplayRequestInfo(requestID):
     claimantID = All_Requests.loc[requestID]['fufiller']
     claimant = unhashUsername(claimantID)
 
+    return [username, location, title, content, timeframe, status, claimant]
+
 
 def ClaimRequest(requestID, username):
     """self explanatory, update data fields for request, return the username of the poster for requestID"""
