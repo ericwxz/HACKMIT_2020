@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import datetime
 import pickle
+import location
 
 #use userID and requestID to index the dataframes
 #pandas dataframes for storing information about users. 
@@ -63,7 +64,7 @@ class All_Users:
 
 #pandas dataframes for storing infomation about requests
 class All_Requests:
-	columns = ['requester', 'fufiller', 'time', 'location', 'status', 'description']
+	columns = ['requester', 'fufiller', 'time', 'location', 'status', 'description', 'title']
 	Requests = pd.DataFrame(columns = columns)
 
 	#list of completed tasks, used for the sucess stories page
@@ -71,7 +72,7 @@ class All_Requests:
 
 
 	def add_request(self, request, requestID, All_Users):
-		"add request data to the Request dataframe. request is a list with the following format:['requester (ID)', 'fufiller (ID)', 'time', 'location', 'status', 'description'] and requestID is the unique identifier for the request. return 1 on success. All_Users refers to the instance of the All_Users class. status will be set to -1, fufiller will be set to empty string"
+		"add request data to the Request dataframe. request is a list with the following format:['requester (ID)', 'fufiller (ID)', 'time', 'location', 'status', 'description', 'title'] and requestID is the unique identifier for the request. return 1 on success. All_Users refers to the instance of the All_Users class. status will be set to -1, fufiller will be set to empty string"
 		request[1] = "" #making the fufiller null since it has not been fufilled yet
 		request[4] = -1 #marking the status as unfufilled
 		self.Requests.loc[requestID] = request
@@ -80,7 +81,7 @@ class All_Requests:
 		requesterID = request[0]
 		All_Users.Users.loc[requesterID]['requests'].append(requestID)
 
-		self.Requests.sort_values(by = ['time'], ascending=False, inplace=True)
+		self.Requests.sort_values(by = ['time'][1], ascending=False, inplace=True)
 		return 1
 
 	def add_fufiller(self, requestID, fufillerID, All_Users):
