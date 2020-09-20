@@ -23,7 +23,6 @@ def create_user():
 
 @app.route('/login',methods=['POST'])
 def login():
-    #return status (capitalized), username, and hash
     if request.method=='POST':
         username = request.form.get('username')
         password = request.form.get('password')
@@ -65,20 +64,36 @@ def claimReq():
         claimer = request.form.get('userkey')
         requestID = request.form.get('requestID')
         status = ClaimRequest(requestID,claimer)
-        if status != -1:
-            return json.dumps(['result':'Success'])
-    return json.dumps({'result':'failure'})
+        return json.dumps(['result':'Success'])
+    return json.dumps({'result':'Failure'})
 
 @app.route('/fulfillreq',methods=['POST'])
 def fulfillReq():
-
+    if request.method=='POST':
+        requestID = request.form.get('requestID')
+        username = request.form.get('username')
+        CompleteRequest(requestID,username)
+        return json.dumps(['result':'Success'])
+    return json.dumps({'result':'Failure'})
 
 @app.route('displayreqs',methods=['POST'])
 def displayReqs():
+    if request.method=='POST':
+        location = request.form.get('location')
+        reqlist = NearbyRequests(location)
+        return json.dumps({'reqID'+str(i):reqlist[i][0], 'title'+str(i):reqlist[i][1], 'description'+str(i):reqlist[i][2]})
 
 @app.route('/userprofile', methods=['POST'])
 def fetchProfile():
+    if request.method=='POST':
+        username = request.form.get('username')
+        arr = DisplayUserProfile(username)
+        return json.dumps({'location':arr[0],'requestIDs':arr[1],'claimIDs':arr[2],'points':arr[3]})
 
 @app.route('/locationinfo', methods=['POST'])
 def locationInfo():
-    
+    if request.method=='POST':
+        name = request.form.get('name')
+        points = DisplayLocationInfo(name)
+        return json.dumps({'points':points})
+
