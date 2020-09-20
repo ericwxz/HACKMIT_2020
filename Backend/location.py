@@ -95,7 +95,7 @@ class Location():
             return "Name: {}, level: {}, points: {}, prev: None".format(self.name, self.level, self.points)
         return "Name: {}, level: {}, points: {}, prev: {}".format(self.name, self.level, self.points, self.prev.name)
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     """Receives fields from JSON doc and updates fields"""
     # head = Location()
     # #print(str(head))
