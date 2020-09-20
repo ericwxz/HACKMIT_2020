@@ -1,0 +1,181 @@
+
+
+@font-face {
+    font-family: 'Futura';
+    src: url('Futura.ttc');
+}
+
+body {
+    font-family: 'Futura';
+    color: #F3CBC1; 
+    background-color: #2D3830;
+}
+
+.message-slot {
+  color: red; 
+  text-align: center;
+}
+
+
+
+
+
+#topnav {
+    margin: auto; 
+    overflow: hidden; 
+    padding-top: 10px; 
+    padding-bottom: 5px; 
+    display: flex; 
+    justify-content: center;
+    height: 10%;
+  } 
+
+#topnav span { 
+  float: left; 
+  padding-top: 10px;
+  padding-bottom: 10px; 
+  padding-left: 40px; 
+  padding-right: 40px; 
+  text-decoration: none;
+  font-size: 20px;
+} 
+
+#topnav span::after { 
+  content: '';
+  display: block;
+  margin: auto; 
+  width: 0;
+  height: 3px;
+  background: white;
+  transition: width .3s;
+}
+
+#topnav span:hover {
+  color: white;
+}
+
+#topnav span:hover:after {
+  width: 100%;
+} 
+
+#mainbox { 
+    height: 80%;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 70px;
+    overflow-x: hidden;
+}
+
+
+
+
+
+
+/* LOGGING IN */
+#loginbox {
+  margin-top: 10%; 
+  margin-left: 30%; 
+  margin-right: 30%; 
+  padding-top: 3px; 
+  padding-bottom: 10px; 
+  border-radius: 7px; 
+  background-color: #fff5f2; 
+  color: black; 
+  text-align: center; 
+  line-height: 30px; 
+}
+
+#login-p {
+  font-size: 20px; 
+}  
+
+
+
+
+
+/* DASHBOARD */
+#splitleft {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 70px;
+  padding-bottom: 5px; 
+  left: 0;
+  overflow: scroll; 
+}
+
+#splitright {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 70px;
+  padding-bottom: 5px; 
+  right: 0;
+  overflow: scroll; 
+}
+
+
+
+.floathalfbox {
+  width: 80%; 
+  margin: 10px auto; 
+  padding: 10px; 
+  display: block; 
+  border-radius: 5px; 
+  background-color: #fff5f2; 
+  line-height: 5px;
+}
+
+.floathalfbox-title {
+  color: #2D3830;
+  font-size: 25px; 
+  text-align: center; 
+}
+
+.floathalfbox-subtitle{ 
+  font-size: 15px; 
+  text-align: center; 
+}
+
+#createquest-title {
+  width: 80%; 
+  float: center; 
+  margin-bottom: 10px; 
+  margin-right: 10%; 
+  margin-left: 10%; 
+}
+
+#createquest-cat {
+  width: 35%; 
+  position: relative; 
+  margin-bottom: 10px; 
+  margin-left: 10%; 
+}
+
+#createquest-time {
+  width: 35%; 
+  position: relative; 
+  margin-bottom: 10px; 
+  right: -10%; 
+}
+
+#createquest-desc {
+  width: 80%; 
+  height: 50px; 
+  float: center; 
+  margin-bottom: 10px; 
+  margin-right: 10%; 
+  margin-left: 10%; 
+  font-family: 'Arial';
+}
+
+#createquest-submit {
+  float: center; 
+  width: 20%; 
+  margin-bottom: 10px; 
+  margin-right: 10%; 
+  margin-left: 10%; 
+}
