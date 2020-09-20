@@ -97,3 +97,9 @@ def locationInfo():
         points = DisplayLocationInfo(name)
         return json.dumps({'points':points})
 
+@app.route('/requestinfo',methods=['POST'])
+def viewRequestInfo():
+    if request.method=='POST':
+        requestID = request.form.get('requestID')
+        arr = DisplayRequestInfo(requestID)
+        return json.dumps({'username':arr[0],'location':arr[1],'title':arr[2],'description':arr[3],'timeframe':arr[4],'status':arr[5],'claimant':arr[6]})
