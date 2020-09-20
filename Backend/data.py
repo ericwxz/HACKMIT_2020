@@ -46,13 +46,13 @@ class All_Users:
 
 	def save_users(self,filepath):
 		"save the users to given filepath as pickle file. filepath ends with a DIRECTOR and / i.e. '/file/path/'"
-		filepath = filepath + "/users.pkl"
+		filepath = filepath + "users.pkl"
 		self.Users.to_pickle(filepath)
 
 
 	def load_users(self,filepath):
 		"loads the users from pickle file at filepath. filepath ends with a DIRECTOR and / i.e. '/file/path/'"
-		filepath = filepath + "/users.pkl"
+		filepath = filepath + "users.pkl"
 		self.Users = pd.read_pickle(filepath)
 
 	
@@ -106,11 +106,11 @@ class All_Requests:
 
 	def save_requests(self,filepath):
 		"save the users to given filepath as pickle file. filepath ends with a DIRECTOR and / i.e. '/file/path/'"
-		filepath = filepath + "/requests.pkl"
+		filepath = filepath + "requests.pkl"
 		self.Requests.to_pickle(filepath)
 
 
 	def load_requests(self,filepath):
 		"loads the users from pickle file at filepath. filepath ends with a DIRECTOR and / i.e. '/file/path/'"
-		filepath = filepath + "/requests.pkl"
+		filepath = filepath + "requests.pkl"
 		self.Requests = pd.read_pickle(filepath)
