@@ -11,10 +11,10 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // EXPERIMENT 
     sessionStorage.setItem('userkey', 123) 
-    sessionStorage.setItem('username', 'alexis') 
+    sessionStorage.setItem('username', 'Alexis') 
 
     // sessionStorage.removeItem('userkey')
-    // sessionStorage.removeItem('userkey')
+    // sessionStorage.removeItem('username')
 
     // INITIAL CHECK IF LOGGED IN ON PAGE LOAD 
     if (sessionStorage.getItem('userkey') == null && sessionStorage.getItem('username') == null){
@@ -83,6 +83,7 @@ function LoginPage(){
 
     const loginMessageSlot = ce('p') 
     loginMessageSlot.id = "login-message-slot"
+    loginMessageSlot.className = "message-slot"
     loginBox.append(loginMessageSlot)
 
     const loginForm = ce('form') 
@@ -161,8 +162,7 @@ function LogIn(event){
                     loginMessageSlot.innerText = ""
                 }, 2000) 
             } 
-            event.target.querySelector('#login-username').value = ''
-            event.target.querySelector('#login-password').value = ''
+            event.target.reset() 
         })  
 
 }
@@ -182,7 +182,9 @@ function SignUpPage(){
     signInP.innerText = "SIGN UP"
     signUpBox.append(signInP) 
 
-    const signUpMessageSlot = ce('p')
+    const signUpMessageSlot = ce('p') 
+    signUpMessageSlot.id = "signup-message-slot"
+    signUpMessageSlot.className = "message-slot"
     signUpBox.append(signUpMessageSlot)
 
     const signUpForm = ce('form') 
@@ -304,16 +306,10 @@ function SignUp(event){
                     signUpMessageSlot.innerText = ""
                 }, 2000) 
             } 
-            event.target.querySelector('#signup-username').value = ''
-            event.target.querySelector('#signup-password').value = ''
-            event.target.querySelector('#signup-passwordcheck').value = ''
-            event.target.querySelector('#signup-loc-state').value = ''
-            event.target.querySelector('#signup-loc-city').value = ''
-            event.target.querySelector('#signup-loc-zipcode').value = ''
+            event.target.reset() 
         })  
 
 }
-
 
 
 
@@ -325,6 +321,7 @@ function Dashboard(){
     ClearMainBox() 
     console.log('yo, dashboard')
 
+    // Set up split screen -- > 
     splitRight = ce('div')
     splitRight.id = "splitright"
     mainbox.append(splitRight)
@@ -332,8 +329,173 @@ function Dashboard(){
     splitLeft = ce('div')
     splitLeft.id = "splitleft"
     mainbox.append(splitLeft)
+    // End of set up split screen -- > 
+
+
+    // Welcome -- >
+    welcomeBox = ce('div')
+    welcomeBox.className = 'floathalfbox'
+    splitLeft.append(welcomeBox)
+    welcomeTitle = ce('p')
+    welcomeTitle.className = 'floathalfbox-title'  
+    welcomeTitle.innerText = "Welcome, " + sessionStorage.getItem('username') + "!"
+    welcomeBox.append(welcomeTitle) 
+    // End of Welcome -- > 
+
+
+    // Create a New Request Box -- >  
+    createQuestBox = ce('div') 
+    createQuestBox.className = 'floathalfbox'
+    splitRight.append(createQuestBox)
+    
+    createQuestTitle = ce('p')
+    createQuestTitle.className = 'floathalfbox-title'  
+    createQuestTitle.innerText = "Create a Request"
+    createQuestBox.append(createQuestTitle) 
+
+    createQuestSubtitle = ce('p')
+    createQuestSubtitle.className = 'floathalfbox-subtitle'
+    createQuestSubtitle.innerText = "Help is only 6 feet away" 
+    createQuestBox.append(createQuestSubtitle)
+
+    createQuestMessageSlot = ce('p') 
+    createQuestMessageSlot.id = "createquest-message-slot" 
+    createQuestMessageSlot.className = "message-slot"
+    createQuestBox.append(createQuestMessageSlot) 
+
+    createQuestForm = ce('form') 
+    createQuestBox.append(createQuestForm)
+
+    createQuestInputTitle = ce('input')
+    createQuestInputTitle.id = "createquest-title" 
+    createQuestInputTitle.placeholder = "Title"
+    createQuestForm.append(createQuestInputTitle)
+
+    createQuestInputCat = ce('select')
+    createQuestInputCat.id = "createquest-cat" 
+    createQuestForm.append(createQuestInputCat)
+
+    createQuestInputCatRemote = ce('option')
+    createQuestInputCatRemote.value = "Remote" 
+    createQuestInputCatRemote.innerText = "Remote" 
+    createQuestInputCat.append(createQuestInputCatRemote)
+
+    createQuestInputCatErrand = ce('option')
+    createQuestInputCatErrand.value = "Errand" 
+    createQuestInputCatErrand.innerText = "Errand" 
+    createQuestInputCat.append(createQuestInputCatErrand)
+
+    createQuestInputCatMisc = ce('option')
+    createQuestInputCatMisc.value = "Miscellaneous" 
+    createQuestInputCatMisc.innerText = "Miscellaneous" 
+    createQuestInputCat.append(createQuestInputCatMisc)
+
+    createQuestInputCatSocial = ce('option')
+    createQuestInputCatSocial.value = "Social" 
+    createQuestInputCatSocial.innerText = "Social" 
+    createQuestInputCat.append(createQuestInputCatSocial)
+    
+    createQuestInputTime= ce('input') 
+    createQuestInputTime.type = "number"
+    createQuestInputTime.placeholder = "Time Frame (minutes)"
+    createQuestInputTime.id = "createquest-time" 
+    createQuestForm.append(createQuestInputTime)
+
+
+    createQuestInputDescription = ce('textarea') 
+    createQuestInputDescription.id = "createquest-desc" 
+    createQuestInputDescription.placeholder = "Details" 
+    createQuestForm.append(createQuestInputDescription) 
+
+    createQuestInputSubmit = ce('button')
+    createQuestInputSubmit.id = "createquest-submit"
+    createQuestInputSubmit.innerText = "Create"
+    createQuestForm.append(createQuestInputSubmit)
+
+    createQuestForm.addEventListener('submit', function(event){
+        event.preventDefault() 
+        CreateQuest(event) 
+    })
+
+    // End of create a New Request Box -- > 
+
+
+
+    // Request profile data -- > 
+
+    const configObj = { 
+        method: 'POST', 
+        headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }, 
+        body: JSON.stringify({
+            userkey: sessionStorage.getItem('userkey'), 
+            username: sessionStorage.getItem('username')
+        }) 
+    } 
+
+    fetch('http://localhost:3000/users/login', configObj)
+        .then(res => res.json())
+        .then(json => {
+            const postedRequests = json.postedrequests 
+            const answeredRequests = json.answeredrequests
+            const currentPoints = json.points 
+
+            Profile(splitLeft) 
+        })  
+
+
+    // End of request profile data -- > 
+
 
 }
+
+function CreateQuest(event) {
+    console.log(event.target)
+    const configObj = { 
+        method: 'POST', 
+        headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }, 
+        body: JSON.stringify({
+            title: event.target.querySelector('#createquest-title').value, 
+            description: event.target.querySelector('#createquest-desc').value,
+            category: event.target.querySelector('#createquest-cat').value, 
+            timeframe: event.target.querySelector('#createquest-time').value
+        }) 
+    } 
+
+    fetch('http://localhost:3000/users/login', configObj)
+        .then(res => res.json())
+        .then(json => {
+            if (json.status == "Success"){ 
+                Dashboard() 
+            } 
+            else { 
+                createQuestMessageSlot = qs('p#createquest-message-slot')
+                createQuestMessageSlot.innerText = "Invalid!" 
+                setTimeout(function(){ 
+                    createQuestMessageSlot.innerText = ""
+                }, 2000) 
+            } 
+            event.target.reset() 
+        })  
+}
+
+function Profile(splitLeft) {
+
+    profileBox = ce('div')
+    profileBox.className= 'floathalfbox' 
+    profileBox.innerText = "hello"
+    splitLeft.append(profileBox) 
+}
+
+
+
+
+
 
 function Requests(){
     ClearMainBox() 
