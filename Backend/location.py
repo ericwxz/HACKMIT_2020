@@ -31,11 +31,18 @@ class Location():
             level +=1
             prev = new_region            
 
-    def propagate_points(self):
+    def propagate_points(self, name):
         #do smth
-        pass
+        node = self.search(name)
+        if not node:
+            print("Location not seen before")
+            return
+        current = node
+        while current:
+            current.points += 1
+            current = current.prev
     
-    def search(self, name, print_mode=0):
+    def search(self, name, print_mode=0, save_mode=0):
         if not self:
             print("Invalid node")
             return None
@@ -54,11 +61,21 @@ class Location():
     def print_tree(self):
         return self.search(None, print_mode=1)
 
+    def save(self):
+        """
+            File format: name, 
+        """
+        pass
+
+    def load(self):
+        pass
 
     def __eq__(self, other):
         return self.name == other.name
     def __str__(self):
-        return "Name: {}, level: {}, points: {}".format(self.name, self.level, self.points)
+        if not self.prev:
+            return "Name: {}, level: {}, points: {}, prev: None".format(self.name, self.level, self.points)
+        return "Name: {}, level: {}, points: {}, prev: {}".format(self.name, self.level, self.points, self.prev.name)
 
 if __name__ == "__main__":
     """Receives fields from JSON doc and updates fields"""
@@ -68,4 +85,9 @@ if __name__ == "__main__":
     head.add_entry("California", "Los Angeles", "Hollywood", "90038")
     head.add_entry("New York", "Queens", "Brooklyn Manor", "11421")
     #print(str(head.children[0].children[0]))
+
+    #fulfilled request in 90035, 90038
+    head.propagate_points("90035")
+    head.propagate_points("90038")
+
     head.print_tree()
