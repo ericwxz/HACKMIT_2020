@@ -325,6 +325,7 @@ function Dashboard(){
     ClearMainBox() 
     console.log('yo, dashboard')
 
+    // Set up split screen -- > 
     splitRight = ce('div')
     splitRight.id = "splitright"
     mainbox.append(splitRight)
@@ -332,8 +333,103 @@ function Dashboard(){
     splitLeft = ce('div')
     splitLeft.id = "splitleft"
     mainbox.append(splitLeft)
+    // End of set up split screen -- > 
+
+
+    // Profile -- >
+    profileBox = ce('div')
+    profileBox.className = 'floathalfbox'
+    splitLeft.append(profileBox)
+
+    
+
+    profileTitle = ce('p')
+    profileTitle.className = 'floathalfbox-title'  
+    profileTitle.innerText = "Welcome"
+    profileBox.append(profileTitle) 
+    // End of profile -- > 
+
+
+
+    // Create a New Request Box -- >  
+    createQuestBox = ce('div') 
+    createQuestBox.className = 'floathalfbox'
+    splitRight.append(createQuestBox)
+    
+    createQuestTitle = ce('p')
+    createQuestTitle.className = 'floathalfbox-title'  
+    createQuestTitle.innerText = "Create a Request"
+    createQuestBox.append(createQuestTitle) 
+
+    createQuestSubtitle = ce('p')
+    createQuestSubtitle.className = 'floathalfbox-subtitle'
+    createQuestSubtitle.innerText = "Help is only 6 feet away" 
+    createQuestBox.append(createQuestSubtitle)
+
+    createQuestForm = ce('form') 
+    createQuestBox.append(createQuestForm)
+
+    createQuestInputTitle = ce('input')
+    createQuestInputTitle.id = "createquest-title" 
+    createQuestInputTitle.placeholder = "Title"
+    createQuestForm.append(createQuestInputTitle)
+
+    createQuestInputCat = ce('select')
+    createQuestInputCat.id = "createquest-cat" 
+    createQuestForm.append(createQuestInputCat)
+
+    createQuestInputCatRemote = ce('option')
+    createQuestInputCatRemote.value = "Remote" 
+    createQuestInputCatRemote.innerText = "Remote" 
+    createQuestInputCat.append(createQuestInputCatRemote)
+
+    createQuestInputCatErrand = ce('option')
+    createQuestInputCatErrand.value = "Errand" 
+    createQuestInputCatErrand.innerText = "Errand" 
+    createQuestInputCat.append(createQuestInputCatErrand)
+
+    createQuestInputCatMisc = ce('option')
+    createQuestInputCatMisc.value = "Miscellaneous" 
+    createQuestInputCatMisc.innerText = "Miscellaneous" 
+    createQuestInputCat.append(createQuestInputCatMisc)
+
+    createQuestInputCatSocial = ce('option')
+    createQuestInputCatSocial.value = "Social" 
+    createQuestInputCatSocial.innerText = "Social" 
+    createQuestInputCat.append(createQuestInputCatSocial)
+    
+    createQuestInputTime= ce('input') 
+    createQuestInputTime.type = "number"
+    createQuestInputTime.placeholder = "Time Frame (minutes)"
+    createQuestInputTime.id = "createquest-time" 
+    createQuestForm.append(createQuestInputTime)
+
+
+    createQuestInputDescription = ce('textarea') 
+    createQuestInputDescription.id = "createquest-desc" 
+    createQuestInputDescription.placeholder = "Details" 
+    createQuestForm.append(createQuestInputDescription) 
+
+    createQuestInputSubmit = ce('button')
+    createQuestInputSubmit.id = "createquest-submit"
+    createQuestInputSubmit.innerText = "Create"
+    createQuestForm.append(createQuestInputSubmit)
+
+    createQuestForm.addEventListener('submit', function(event){
+        event.preventDefault()
+        CreateQuest(event) 
+    })
+
+    // End of create a New Request Box -- > 
 
 }
+
+function CreateQuest(event) {
+    console.log(event.target)
+}
+
+
+
 
 function Requests(){
     ClearMainBox() 
