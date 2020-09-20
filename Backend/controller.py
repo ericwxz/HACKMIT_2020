@@ -1,5 +1,6 @@
 import data
 import json
+from location import Location
 
 def InitializeUser(username, password, contactInfo, locationstate,locationcity,locationzipcode):
     """Checks if location is initialized; adds to location tree, adds user to database, returns -1 on failure"""
@@ -32,7 +33,13 @@ def CancelRequest(requestID,username):
     """mark request as completed but do not add points"""
 
 def DisplayLocationInfo(locationname):
-    """return json with location points"""
+    """return location points"""
+    node = head.search(locationname)
+    if not node:
+        print("Unknown location")
+        return None
+    points = node.points
+    return points
 
 def hashUsername(username):
     return username
