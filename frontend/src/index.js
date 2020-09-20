@@ -489,7 +489,7 @@ function Profile(splitLeft) {
     profileBox = ce('div')
     profileBox.className= 'floathalfbox' 
     profileBox.innerText = "hello"
-    splitLeft.append(profileBox)
+    splitLeft.append(profileBox) 
 }
 
 
