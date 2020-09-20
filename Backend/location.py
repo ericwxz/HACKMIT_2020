@@ -1,3 +1,8 @@
+import data
+import pandas as pd
+import numpy as np
+import pickle
+
 class Location():
     
     def __init__(self, name='US', children=None, level=0, prev=None):
@@ -46,29 +51,42 @@ class Location():
         if not self:
             print("Invalid node")
             return None
+        if save_mode == 1:
+            return_list = []
         q = []
         q.append(self)
         while len(q) > 0:
             current = q.pop(0)
+            if save_mode == 1:
+                return_list.append(current)
             if print_mode == 1:
                 print(str(current))
             for c in current.children:
                 q.append(c)
             if current.name == name:
                 return current
+        if save_mode == 1:
+            return return_list
         return None
 
     def print_tree(self):
         return self.search(None, print_mode=1)
 
-    def save(self):
+    def save(self, filepath):
         """
             File format: name, 
         """
-        pass
+        all_nodes = self.search(None, save_mode=1)
+        all_nodes = pd.DataFrame(all_nodes)
+        filepath = filepath +'locations.pkl'
+        all_nodes.to_pickle(filepath)
 
-    def load(self):
-        pass
+    def load(self, filepath):
+        filepath = filepath +'locations.pkl'
+        all_nodes = pd.read_pickle(filepath)
+        head = all_nodes.iloc[0][0]
+        #head.search(None, print_mode=1)
+        return head
 
     def __eq__(self, other):
         return self.name == other.name
@@ -79,15 +97,17 @@ class Location():
 
 if __name__ == "__main__":
     """Receives fields from JSON doc and updates fields"""
-    head = Location()
-    #print(str(head))
-    head.add_entry("California", "Los Angeles", "Beverly Hills", "90035")
-    head.add_entry("California", "Los Angeles", "Hollywood", "90038")
-    head.add_entry("New York", "Queens", "Brooklyn Manor", "11421")
-    #print(str(head.children[0].children[0]))
+    # head = Location()
+    # #print(str(head))
+    # head.add_entry("California", "Los Angeles", "Beverly Hills", "90035")
+    # head.add_entry("California", "Los Angeles", "Hollywood", "90038")
+    # head.add_entry("New York", "Queens", "Brooklyn Manor", "11421")
+    # #print(str(head.children[0].children[0]))
 
-    #fulfilled request in 90035, 90038
-    head.propagate_points("90035")
-    head.propagate_points("90038")
+    # #fulfilled request in 90035, 90038
+    # head.propagate_points("90035")
+    # head.propagate_points("90038")
+    
+    
 
-    head.print_tree()
+    # head.print_tree
