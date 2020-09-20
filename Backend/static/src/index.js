@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     console.log('Hello World')
     const mainbox = qs('div#mainbox')  
-
+ 
     // DEFINITIONS 
     const dashboardTab = qs('span#page-dashboard')
     const requestsTab = qs('span#page-requests')
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function(){
     sessionStorage.setItem('userkey', 123) 
     sessionStorage.setItem('username', 'Alexis') 
 
-    // sessionStorage.removeItem('userkey')
+    // sessionStorage.removeItem('userkey') 
     // sessionStorage.removeItem('username')
 
     // INITIAL CHECK IF LOGGED IN ON PAGE LOAD 
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function(){
         ClearMainBox() 
         LoginPage() 
     } 
-    else {
+    else { 
         console.log(sessionStorage.getItem('userkey'))
         Dashboard() 
     }
@@ -315,6 +315,7 @@ function SignUp(event){
 
 
 
+
 // DASHBOARD 
 
 function Dashboard(){
@@ -332,15 +333,9 @@ function Dashboard(){
     // End of set up split screen -- > 
 
 
-    // Welcome -- >
-    welcomeBox = ce('div')
-    welcomeBox.className = 'floathalfbox'
-    splitLeft.append(welcomeBox)
-    welcomeTitle = ce('p')
-    welcomeTitle.className = 'floathalfbox-title'  
-    welcomeTitle.innerText = "Welcome, " + sessionStorage.getItem('username') + "!"
-    welcomeBox.append(welcomeTitle) 
-    // End of Welcome -- > 
+
+
+    Profile(splitLeft)
 
 
     // Create a New Request Box -- >  
@@ -484,15 +479,49 @@ function CreateQuest(event) {
         })  
 }
 
-function Profile(splitLeft) {
+function Profile(splitLeft, json = ['hello']) {
+
+    const answeredRequests = json
 
     profileBox = ce('div')
     profileBox.className= 'floathalfbox' 
-    profileBox.innerText = "hello"
     splitLeft.append(profileBox) 
+
+    welcomeTitle = ce('p')
+    welcomeTitle.className = 'floathalfbox-title'  
+    welcomeTitle.innerText = "Welcome, " + sessionStorage.getItem('username') + "!"
+    profileBox.append(welcomeTitle) 
+
+    profileBoxBr = ce('br')
+    profileBox.append(profileBoxBr)
+
+    profileBoxPoints = ce('p')
+    profileBoxPoints.className = 'floathalfbox-title' 
+    profileBoxPoints.innerText = "Current points: 20"
+    profileBox.append(profileBoxPoints)
+
+
+    answeredRequests.forEach(function (item, index) {
+        console.log(item, index);
+      }); 
+
 }
 
 
+function QuestCard(json, location){
+    thisQuestCard = ce('div')
+    location.append(thisQuestCard)
+    thisQuestCard.id = 'floathalfbox' 
+
+    thisQuestCardTitle = ce('p') 
+    thisQuestCard.append(thisQuestCardTitle) 
+    thisQuestCardTitle.innerText = json.title 
+
+    thisQuestCardDesc = ce('p') 
+    thisQuestCardDesc.innerText = json.description 
+    thisQuestCard.append(thisQuestCardDesc) 
+
+}
 
 
 

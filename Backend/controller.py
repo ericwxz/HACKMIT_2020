@@ -7,3 +7,5 @@ def InitializeUser(username, password, contactInfo, location):
 
 def DisplayUserProfile(username):
     """returns a json"""
+
+
