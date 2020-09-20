@@ -466,7 +466,7 @@ function CreateQuest(event) {
             timeframe: event.target.querySelector('#createquest-time').value
         }) 
     } 
-
+    
     fetch('http://localhost:3000/users/login', configObj)
         .then(res => res.json())
         .then(json => {
