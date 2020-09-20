@@ -33,17 +33,18 @@ def LoginUser(username,password):
 def DisplayUserProfile(username):
     "returns an array [location, requestIDs, claimIDs, and points]"
     userID = hashUsername(username)
-    location = All_Users.loc[userID]['location']
-    requestIDs = All_Users.loc[userID]['requests']
-    claimIDs = All_Users.loc[userID]['fufillments']
-    points = All_Users.loc[userID]['points']
+    location = All_Users.Users.loc[userID]['location']
+    requestIDs = All_Users.Users.loc[userID]['requests']
+    claimIDs = All_Users.Users.loc[userID]['fufillments']
+    points = All_Users.Users.loc[userID]['points']
 
     return [userID, location, requestIDs, claimIDs, points]
 
 
 def GetUserLoc(username):
     "returns the location of the user"
-    location = All_Users.loc[userID]['location']
+    userID = hashUsername(username)
+    location = All_Users.Users.loc[userID]['location']
 
     return location
 
@@ -51,8 +52,8 @@ def GetUserLoc(username):
 def InitializeRequest(username, title, content, timeframe, new_location_name = None):
     "initialize data in database with fields listed above, as well as the hidden fields; if new_location not specified, use user default; returns requestID"
     requester_ID = hashUsername(username)
-    request = [requester_ID, "", [timeframe, datetime.now()], All_Users.loc[requester_ID]['location'], 0, content, title]
-    request_hash = username + description + datetime.now()
+    request = [requester_ID, "", [timeframe, datetime.now()], All_Users.Users.loc[requester_ID]['location'], 0, content, title]
+    request_hash = username + content + str(datetime.now())
     request_hash = hash(request_hash)
 
     result = All_Requests.add_request(request, request_hash, All_Users)
@@ -64,15 +65,17 @@ def InitializeRequest(username, title, content, timeframe, new_location_name = N
 
 def DisplayRequestInfo(requestID):
     "retrieves request info in requesttable: username, location, title, content, timeframe, status, claimant"
-    userID = All_Requests.loc[requestID]['requester']
+    userID = All_Requests.Requests.loc[requestID]['requester']
     username = unhashUsername(userID)
-    location = All_Requests.loc[requestID]['location']
-    title = All_Requests.loc[requestID]['title']
-    content = All_Requests.loc[requestID]['description']
-    timeframe = All_Requests.loc[requestID][0]
-    status = All_Requests.loc[requestID]['status']
-    claimantID = All_Requests.loc[requestID]['fufiller']
-    claimant = unhashUsername(claimantID)
+    location = All_Requests.Requests.loc[requestID]['location']
+    title = All_Requests.Requests.loc[requestID]['title']
+    content = All_Requests.Requests.loc[requestID]['description']
+    timeframe = All_Requests.Requests.loc[requestID][0]
+    status = All_Requests.Requests.loc[requestID]['status']
+    claimantID = All_Requests.Requests.loc[requestID]['fufiller']
+    claimant = ""
+    if claimantID != "":
+        claimant = unhashUsername(claimantID)
 
     return [username, location, title, content, timeframe, status, claimant]
 
@@ -92,7 +95,7 @@ def CompleteRequest(requestID, username):
 
 def CancelRequest(requestID,username):
     "mark request as completed but do not add points"
-    All_Requests.loc[requestID]['status'] = 1
+    All_Requests.Requests.loc[requestID]['status'] = 1
 
 
 def DisplayLocationInfo(locationname):
@@ -126,5 +129,5 @@ def hashUsername(username):
     return hash(username)
 
 def unhashUsername(userID):
-    username = All_Users.loc[userID]['username']
+    username = All_Users.Users.loc[userID]['username']
     return username
