@@ -3,6 +3,7 @@ import numpy as np
 import datetime
 import pickle
 import location
+import pdb
 
 #use userID and requestID to index the dataframes
 #pandas dataframes for storing information about users. 
@@ -81,7 +82,7 @@ class All_Requests:
 		requesterID = request[0]
 		All_Users.Users.loc[requesterID]['requests'].append(requestID)
 
-		self.Requests.sort_values(by = ['time'][1], ascending=False, inplace=True)
+		self.Requests.sort_values(by = ['time'], ascending=False, inplace=True)
 		return 1
 
 	def add_fufiller(self, requestID, fufillerID, All_Users):
@@ -98,10 +99,10 @@ class All_Requests:
 		All_Users.add_point(self.Requests.loc[requestID]['fufiller'])
 		
 		
-		string = self.Requests.loc[requestID]['description'] +": " + self.Requests.loc[requestID]['location']+ ", " + str(self.Requests.loc[requestID]['time'])
+		string = self.Requests.loc[requestID]['description'] +": " + self.Requests.loc[requestID]['location'][3]
 		if len(self.queue) == 5:
-			self.queue.pop()
-		self.queue = [string] + self.queue
+			self.queue.pop(0)
+		self.queue.append(string)
 		return 1
 
 
