@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import datetime
+import pickle
 
 #use userID and requestID to index the dataframes
 #pandas dataframes for storing information about users. 
@@ -11,6 +12,7 @@ class All_Users:
 	#hash table of usernames and passwords. use check_user(username, password) to see if user exists and if the user exists, if the correct password was given
 	Users_hash = {}
 
+
 	#check if user exists and checks password
 	def check_user(self, username, password):
 		"check if a user exists. If user exists, check if password is correct. If user does not exist, return 0. If user exists and password is wrong, return -1. If use exists and password is correct, return 1"
@@ -20,6 +22,7 @@ class All_Users:
 			return 1
 		else:
 			return 0
+
 
 	#functions for adding
 	def add_user(self, user, userID, password): #add user. return 1 on sucess, 0 on failure
@@ -33,10 +36,24 @@ class All_Users:
 		else: #in database. do nothing
 			return 0
 
+
 	#increment points for a user ID
 	def add_point(self, userID):
+		"increment points for userID"
 		self.Users.loc[userID]['points'] +=1
 		return self.Users.loc[userID]['points']
+
+
+	def save_users(self,filepath):
+		"save the users to given filepath as pickle file. filepath ends with a DIRECTOR and / i.e. '/file/path/'"
+		filepath = filepath + "/users.pkl"
+		self.Users.to_pickle(filepath)
+
+
+	def load_users(self,filepath):
+		"loads the users from pickle file at filepath. filepath ends with a DIRECTOR and / i.e. '/file/path/'"
+		filepath = filepath + "/users.pkl"
+		self.Users = pd.read_pickle(filepath)
 
 	
 
@@ -71,3 +88,15 @@ class All_Requests:
 			self.queue.pop()
 		self.queue = [string] + self.queue
 		return 1
+
+
+	def save_requests(self,filepath):
+		"save the users to given filepath as pickle file. filepath ends with a DIRECTOR and / i.e. '/file/path/'"
+		filepath = filepath + "/requests.pkl"
+		self.Requests.to_pickle(filepath)
+
+
+	def load_requests(self,filepath):
+		"loads the users from pickle file at filepath. filepath ends with a DIRECTOR and / i.e. '/file/path/'"
+		filepath = filepath + "/requests.pkl"
+		self.Requests = pd.read_pickle(filepath)
