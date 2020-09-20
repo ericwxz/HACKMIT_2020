@@ -16,14 +16,14 @@ def DisplayUserProfile(username):
 def GetUserLoc(username):
     """returns the location of the user"""
     return -1
-def InitializeRequest(username, title, content, timeframe, new_location_name = None):
+def InitializeRequest(username, title, description, timeframe, new_location_name = None):
     """initialize data in database with fields listed above, as well as the hidden fields; if new_location not specified, use user default; returns requestID"""
     return -1
 def DisplayRequestInfo(requestID):
     """retrieves request info in requesttable: username, location, title, content, timeframe, status, claimant"""
 
 def ClaimRequest(requestID, username):
-    """self explanatory, update data fields for request"""
+    """self explanatory, update data fields for request, return the username of the poster for requestID"""
 
 def CompleteRequest(requestID, username):
     """posting user requests to close/complete the request; update points in db"""
@@ -32,7 +32,10 @@ def CancelRequest(requestID,username):
     """mark request as completed but do not add points"""
 
 def DisplayLocationInfo(locationname):
-    """return json with location points"""
+    """return points from locationname"""
+
+def NearbyRequests(locationname):
+    """return a list of info-lists on each request under locationname in the form [[requestID1,title1, description1],[requestID2,title2,description2],...]"""
 
 def hashUsername(username):
     return username
